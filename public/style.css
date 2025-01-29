@@ -191,6 +191,12 @@ body {
     font-weight: bold;
 }
 
+.popup-quiz-author {
+    margin: auto 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .popup-quiz-score {
     background: #9801f0;
     color: white;
@@ -236,7 +242,8 @@ body {
     margin: auto 0;
 }
 
-.popup-next-btn {
+.popup-next-btn,
+.popup-close-btn {
     background: #9801f0;
     color: white;
     border: 2px solid #9801f0;
@@ -249,7 +256,8 @@ body {
     transition: 0.4s;
 }
 
-.popup-next-btn:hover {
+.popup-next-btn:hover,
+.popup-close-btn:hover {
     background: transparent;
     color: #9801f0;
 }
@@ -260,8 +268,50 @@ body {
     border: 2px solid #8d7f8d;
 }
 
+.popup-result {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1c012c;
+    padding: 20px;
+    width: 500px;
+    height: 300px;
+    color: #9801f0;
+    border: 2px solid #9801f0;
+    border-radius: 30px;
+}
+
+.popup-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.popup-result-text {
+    font-weight: bold;
+    font-size: 35px;
+    color: #9801f0;
+}
+
+.popup-result-percentage {
+    font-size: 80px;
+    font-weight: bold;
+}
+
+.popup-close-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
 .active {
     display: block;
+}
+
+.answered-question {
+    background: #1e022e;
 }
 
 .fade-out {

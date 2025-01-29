@@ -2,15 +2,21 @@ const startQuizBtn = document.querySelector('.main-btn');
 const exitQuizBtn = document.querySelector('.popup-exit-btn');
 const continueQuizBtn = document.querySelector('.popup-continue-btn');
 const nextQuizBtn = document.querySelector('.popup-next-btn');
+const closeResultBtn = document.querySelector('.popup-close-btn');
+const reloadBtn = document.querySelector('.popup-reload-btn');
 
 const popupInfo = document.querySelector('.popup-info');
 const popupQuiz = document.querySelector('.popup-quiz');
+const popupResult = document.querySelector('.popup-result');
+const popupReload = document.querySelector('.popup-reload');
 
 const popupScore = document.querySelector('.popup-quiz-score');
 const popupQuestionNum = document.querySelector('.popup-question-number');
 
 const popupQuestion = document.querySelector('.popup-question');
 const popupAnswers = document.querySelectorAll('.popup-answer');
+
+const popupPercentage = document.querySelector('.popup-result-percentage');
 
 const main = document.querySelector('.main');
 const nav = document.querySelector('.nav');
@@ -33,6 +39,15 @@ continueQuizBtn.addEventListener('click', () => {
         popupInfo.classList.remove('active', 'fade-out');
         popupQuiz.classList.add('active', 'fade-in');
     }, 300);
+});
+
+closeResultBtn.addEventListener('click', () => {
+    popupResult.classList.remove('active');
+    popupReload.classList.add('active');
+});
+
+reloadBtn.addEventListener('click', () => {
+    window.location.href = '/';
 });
 
 const questions = [
@@ -109,23 +124,67 @@ function displayQuestionAndAnswers(
 ) {
     arr.forEach((task, taskIndex) => {
         if (currentQuestion - 1 === taskIndex) {
+            if (currentQuestion === maxQuestionNum) {
+                nextQuizBtn.textContent = 'Submit';
+            } else {
+                nextQuizBtn.textContent = 'Next';
+            }
+
             popupQuestion.textContent = task.question;
 
             popupAnswers.forEach((answer, answerIndex) => {
                 answer.textContent = task.options[answerIndex];
             });
 
+            popupScore.textContent = `Score: ${score}/${maxScore}`;
             popupQuestionNum.textContent = `${currentQuestion} of ${maxQuestionNum} Questions`;
+
+            nextQuizBtn.disabled = true;
+        }
+    });
+
+    answered = false;
+}
+
+let answered = false;
+
+function clickAnswer() {
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('popup-answer') && !answered) {
+            answered = true;
+            nextQuizBtn.disabled = false;
+
+            if (
+                e.target.textContent.trim() ===
+                questions[questionNum - 1].answer
+            ) {
+                score++;
+            }
         }
     });
 }
 
+clickAnswer();
+
 nextQuizBtn.addEventListener('click', () => {
     questionNum++;
 
-    displayQuestionAndAnswers();
+    if (questionNum > maxQuestionNum) {
+        popupQuiz.classList.add('fade-out');
+        quizResult();
+
+        setTimeout(() => {
+            popupQuiz.classList.remove('active', 'fade-out');
+            popupResult.classList.add('active', 'fade-in');
+        }, 300);
+    } else {
+        displayQuestionAndAnswers();
+    }
 });
 
-displayQuestionAndAnswers();
+function quizResult() {
+    const result = (100 / maxQuestionNum) * score;
+    popupPercentage.textContent = `${result}%`;
+}
 
-popupScore.textContent = `Score: ${score}/${maxScore}`;
+displayQuestionAndAnswers();

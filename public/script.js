@@ -23,12 +23,14 @@ const main = document.querySelector('.main');
 const nav = document.querySelector('.nav');
 
 startQuizBtn.addEventListener('click', () => {
+    popupOverlay.classList.add('active');
     popupInfo.classList.add('active');
     nav.classList.add('blur');
     main.classList.add('blur');
 });
 
 exitQuizBtn.addEventListener('click', () => {
+    popupOverlay.classList.remove('active');
     popupInfo.classList.remove('active');
     nav.classList.remove('blur');
     main.classList.remove('blur');
@@ -48,7 +50,6 @@ closeResultBtn.addEventListener('click', () => {
 
     setTimeout(() => {
         popupResult.classList.remove('active', 'fade-out');
-        popupOverlay.classList.add('active');
         popupReload.classList.add('active', 'fade-in');
     }, 300);
 });

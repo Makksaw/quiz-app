@@ -1,8 +1,17 @@
 const startQuizBtn = document.querySelector('.main-btn');
 const exitQuizBtn = document.querySelector('.popup-exit-btn');
 const continueQuizBtn = document.querySelector('.popup-continue-btn');
+const nextQuizBtn = document.querySelector('.popup-next-btn');
+
 const popupInfo = document.querySelector('.popup-info');
 const popupQuiz = document.querySelector('.popup-quiz');
+
+const popupScore = document.querySelector('.popup-quiz-score');
+const popupQuestionNum = document.querySelector('.popup-question-number');
+
+const popupQuestion = document.querySelector('.popup-question');
+const popupAnswers = document.querySelectorAll('.popup-answer');
+
 const main = document.querySelector('.main');
 const nav = document.querySelector('.nav');
 
@@ -25,3 +34,98 @@ continueQuizBtn.addEventListener('click', () => {
         popupQuiz.classList.add('active', 'fade-in');
     }, 300);
 });
+
+const questions = [
+    {
+        number: 1,
+        question: 'What does HTML stand for?',
+        answer: 'C. Hyper Text Markup Language',
+        options: [
+            'A. Hyper Type Multi Language',
+            'B. Hyper Text Multiple Language',
+            'C. Hyper Text Markup Language',
+            'D. Home Text Multi Language',
+        ],
+    },
+    {
+        number: 2,
+        question: 'What does CSS stand for?',
+        answer: 'A. Cascading Style Sheet',
+        options: [
+            'A. Cascading Style Sheet',
+            'B. Cute Style Sheet',
+            'C. Computer Style Sheet',
+            'D. Code Style Sheet',
+        ],
+    },
+    {
+        number: 3,
+        question: 'What does PHP stand for?',
+        answer: 'A. Hypertext Preprocessor',
+        options: [
+            'A. Hypertext Preprocessor',
+            'B. Hometext Programming',
+            'C. Hypertext Preprogramming',
+            'D. Programming Hypertext Preprocessor',
+        ],
+    },
+    {
+        number: 4,
+        question: 'What does SQL stand for?',
+        answer: 'D. Structured Query Language',
+        options: [
+            'A. Strength Query Language',
+            'B. Stylesheet Query Language',
+            'C. Science Question Language',
+            'D. Structured Query Language',
+        ],
+    },
+    {
+        number: 5,
+        question: 'What does XML stand for?',
+        answer: 'D. Extensible Markup Language',
+        options: [
+            'A. Excellent Multiple Language',
+            'B. Explore Multiple Language',
+            'C. Extra Markup Language',
+            'D. Extensible Markup Language',
+        ],
+    },
+];
+
+let score = 0;
+let maxScore = (maxQuestionNum = 0);
+
+let questionNum = 1;
+
+for (let i = 0; i < questions.length; i++) {
+    maxScore++;
+    maxQuestionNum++;
+}
+
+function displayQuestionAndAnswers(
+    arr = questions,
+    currentQuestion = questionNum
+) {
+    arr.forEach((task, taskIndex) => {
+        if (currentQuestion - 1 === taskIndex) {
+            popupQuestion.textContent = task.question;
+
+            popupAnswers.forEach((answer, answerIndex) => {
+                answer.textContent = task.options[answerIndex];
+            });
+
+            popupQuestionNum.textContent = `${currentQuestion} of ${maxQuestionNum} Questions`;
+        }
+    });
+}
+
+nextQuizBtn.addEventListener('click', () => {
+    questionNum++;
+
+    displayQuestionAndAnswers();
+});
+
+displayQuestionAndAnswers();
+
+popupScore.textContent = `Score: ${score}/${maxScore}`;

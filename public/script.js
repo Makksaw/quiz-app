@@ -8,6 +8,7 @@ const reloadBtn = document.querySelector('.popup-reload-btn');
 const popupInfo = document.querySelector('.popup-info');
 const popupQuiz = document.querySelector('.popup-quiz');
 const popupResult = document.querySelector('.popup-result');
+const popupOverlay = document.querySelector('.popup-overlay');
 const popupReload = document.querySelector('.popup-reload');
 
 const popupScore = document.querySelector('.popup-quiz-score');
@@ -35,6 +36,7 @@ exitQuizBtn.addEventListener('click', () => {
 
 continueQuizBtn.addEventListener('click', () => {
     popupInfo.classList.add('fade-out');
+
     setTimeout(() => {
         popupInfo.classList.remove('active', 'fade-out');
         popupQuiz.classList.add('active', 'fade-in');
@@ -42,11 +44,17 @@ continueQuizBtn.addEventListener('click', () => {
 });
 
 closeResultBtn.addEventListener('click', () => {
-    popupResult.classList.remove('active');
-    popupReload.classList.add('active');
+    popupResult.classList.add('fade-out');
+
+    setTimeout(() => {
+        popupResult.classList.remove('active', 'fade-out');
+        popupOverlay.classList.add('active');
+        popupReload.classList.add('active', 'fade-in');
+    }, 300);
 });
 
 reloadBtn.addEventListener('click', () => {
+    popupOverlay.classList.remove('active');
     window.location.href = '/';
 });
 

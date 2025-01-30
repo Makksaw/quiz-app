@@ -143,6 +143,9 @@ function displayQuestionAndAnswers(
 
             popupAnswers.forEach((answer, answerIndex) => {
                 answer.textContent = task.options[answerIndex];
+
+                answer.style.borderColor = '';
+                answer.style.color = '';
             });
 
             popupScore.textContent = `Score: ${score}/${maxScore}`;
@@ -168,6 +171,11 @@ function clickAnswer() {
                 questions[questionNum - 1].answer
             ) {
                 score++;
+                e.target.style.borderColor = 'green';
+                e.target.style.color = 'green';
+            } else {
+                e.target.style.borderColor = 'red';
+                e.target.style.color = 'red';
             }
         }
     });
